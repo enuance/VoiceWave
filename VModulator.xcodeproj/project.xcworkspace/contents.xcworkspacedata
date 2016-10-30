@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:VModulator.xcodeproj">
+      location = "self:/Users/enuance/Desktop/iOS Dev/VModulator/VModulator.xcodeproj">
    </FileRef>
 </Workspace>
