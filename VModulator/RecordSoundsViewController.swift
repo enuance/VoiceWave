@@ -11,8 +11,6 @@ import AVFoundation
 import Foundation
 
 class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
-    
-    
 
     @IBOutlet weak var recordingLabel: UILabel!
     
@@ -21,6 +19,9 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     @IBOutlet weak var timer: UILabel!
     
     @IBOutlet weak var stopRecordButton: UIButton!
+    
+
+    
     
     var timeClock = Timer()
     
@@ -68,13 +69,22 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         print(filePath ?? "No File Path!")
         
         let session = AVAudioSession.sharedInstance()
-        try! session.setCategory(AVAudioSessionCategoryPlayAndRecord)
         
-        try! audioRecorder = AVAudioRecorder(url: filePath!, settings: [:])
-        audioRecorder.delegate = self
-        audioRecorder.isMeteringEnabled = true  // all enabled properties must be changed to the new isEnabled property name!
-        audioRecorder.prepareToRecord()
-        audioRecorder.record()
+        session.requestRecordPermission() {allowed in
+            DispatchQueue.main.async {
+                if allowed {
+                    try! session.setCategory(AVAudioSessionCategoryPlayAndRecord) // this used to be above the try! audio recorder
+                    try! self.audioRecorder = AVAudioRecorder(url: filePath!, settings: [:])// added self to the begining of all of these
+                    self.audioRecorder.delegate = self
+                    self.audioRecorder.isMeteringEnabled = true  // all enabled properties must be changed to the new isEnabled property name!
+                    self.audioRecorder.prepareToRecord()
+                    self.audioRecorder.record()
+                }else{
+                    self.recordingLabel.text = "Denied Permission / App Disabled!"
+                }
+            }
+        }
+
     }
     
  
