@@ -73,7 +73,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         session.requestRecordPermission() {allowed in
             DispatchQueue.main.async {
                 if allowed {
-                    try! session.setCategory(AVAudioSessionCategoryPlayAndRecord) // this used to be above the try! audio recorder
+                    try! session.setCategory(AVAudioSessionCategoryPlayAndRecord, with: AVAudioSessionCategoryOptions.defaultToSpeaker) //added to try default to speaker
                     try! self.audioRecorder = AVAudioRecorder(url: filePath!, settings: [:])// added self to the begining of all of these
                     self.audioRecorder.delegate = self
                     self.audioRecorder.isMeteringEnabled = true  // all enabled properties must be changed to the new isEnabled property name!
