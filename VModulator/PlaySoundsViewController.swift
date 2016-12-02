@@ -67,6 +67,11 @@ class PlaySoundsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         configureUI(playState: .NotPlaying)
     }
-
+    
+    @IBAction func returnToRecord() {
+        stopAudio()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 
 }
