@@ -40,7 +40,7 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
     }
     
     func playSound(rate: Float? = nil, pitch: Float? = nil, echo: Bool = false, reverb: Bool = false) {
-        
+
         // initialize audio engine components
         audioEngine = AVAudioEngine()
         
@@ -59,8 +59,12 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
         audioEngine.attach(changeRatePitchNode)
         
         // node for echo
-        let echoNode = AVAudioUnitDistortion()
-        echoNode.loadFactoryPreset(.multiEcho1)
+       let echoNode = AVAudioUnitDistortion()
+        //let echoNode = AVAudioUnitDelay()
+        //echoNode.delayTime = 1.5
+        //echoNode.feedback = 1.0
+        
+        echoNode.loadFactoryPreset(.multiEcho2)
         audioEngine.attach(echoNode)
         
         // node for reverb
@@ -79,6 +83,7 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
         } else {
             connectAudioNodes(nodes: audioPlayerNode, changeRatePitchNode, audioEngine.outputNode)
         }
+        
         
         // schedule to play and start the engine!
         audioPlayerNode.stop()
@@ -106,7 +111,6 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
             showAlert(title: Alerts.AudioEngineError, message: String(describing: error))
             return
         }
-        
         // play the recording!
         audioPlayerNode.play()
     }
