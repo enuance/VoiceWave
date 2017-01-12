@@ -12,7 +12,7 @@ import AVFoundation
 
 
 
-class PlaySoundsViewController: UIViewController {
+class PlaySoundsViewController: UIViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var SnailButton: UIButton!
     @IBOutlet weak var RabbitButton: UIButton!
@@ -28,10 +28,9 @@ class PlaySoundsViewController: UIViewController {
     var audioPlayerNode: AVAudioPlayerNode!
     var stopTimer: Timer!
     
-    enum ButtonType: Int { case Slow = 0, Fast, Chipmonk, Vader, Echo, Reverb} //enum is type int so that we can utilize tag nums for button presses in the switch statement
+    enum ButtonType: Int { case Slow = 0, Fast, Chipmonk, Vader, Echo, Reverb}
     
     @IBAction func playSoundForButton(_ sender: UIButton) {
-        print("Play Sound Button Pressed") // print statement for debugging.
         switch (ButtonType(rawValue: sender.tag)!) {
         case .Slow:
             playSound(rate: 0.4)
@@ -49,29 +48,18 @@ class PlaySoundsViewController: UIViewController {
         configureUI(playState: .Playing)
     }
     
-    @IBAction func stopButtonPressed(_ sender: AnyObject) {
-        print("Stop Audio Button Pressed") // print statement for debugging
-        stopAudio()
-    }
+    @IBAction func stopButtonPressed(_ sender: AnyObject) {stopAudio()}
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAudio()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        navigationController?.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        configureUI(playState: .NotPlaying)
-    }
+    override func viewWillAppear(_ animated: Bool) {configureUI(playState: .NotPlaying)}
     
-    @IBAction func returnToRecord() {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         stopAudio()
-        self.dismiss(animated: true, completion: nil)
     }
-    
 
 }

@@ -101,9 +101,9 @@
 		20952D4A1DC0372B00419DE5 /* VModulator */ = {
 			isa = PBXGroup;
 			children = (
-				202A552E1DC4349C00554867 /* PlaySoundsViewController+Audio.swift */,
 				20952D4B1DC0372B00419DE5 /* AppDelegate.swift */,
 				20952D4D1DC0372B00419DE5 /* RecordSoundsViewController.swift */,
+				202A552E1DC4349C00554867 /* PlaySoundsViewController+Audio.swift */,
 				201C29F21DC3D15200C91927 /* PlaySoundsViewController.swift */,
 				20952D4F1DC0372B00419DE5 /* Main.storyboard */,
 				20952D521DC0372B00419DE5 /* Assets.xcassets */,
